@@ -1,79 +1,64 @@
+<!DOCTYPE html>
 <html lang="ja">
-    list.sort((a,b)=> new Date(a.date)-new Date(b.date));
-  }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面談記録</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#111110">
+</head>
+<body>
+    <header class="header">
+        <h1>面談記録</h1>
+        <button id="addBtn">+追加</button>
+    </header>
 
-  if (qs === 'name') {
-    list.sort((a,b)=> a.name.localeCompare(b.name,'ja'));
-  }
+    <section class="filters">
+        <input type="text" id="searchInput" placeholder="名前検索">
+        <select id="personFilter">
+            <option value="">全員</option>
+        </select>
+        <select id="typeFilter">
+            <option value="">すべての種別</option>
+            <option value="1on1">1on1</option>
+            <option value="review">評価面談</option>
+            <option value="goal">目標設定</option>
+            <option value="other">その他</option>
+        </select>
+        <select id="sortFilter">
+            <option value="new">新しい順</option>
+            <option value="old">古い順</option>
+            <option value="name">名前順</option>
+        </select>
+    </section>
 
-  return list;
-}
+    <section id="stats"></section>
+    <main id="recordList"></main>
 
-function esc(s) {
-  return String(s || '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;');
-}
-
-function render() {
-  const list = filtered();
-
-  const personSelect = document.getElementById('q-person');
-  const persons = [...new Set(records.map(r => r.name))]
-    .sort((a,b)=>a.localeCompare(b,'ja'));
-
-  const currentPerson = personSelect.value;
-
-  personSelect.innerHTML =
-    '<option value="">全員</option>' +
-    persons.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('');
-
-  personSelect.value = currentPerson;
-
-  const rc = document.getElementById('records');
-
-  rc.innerHTML = list.length === 0
-    ? `<div class="empty">📝<br><br>記録がありません</div>`
-    : list.map(r => `
-      <div class="record-card">
-        <div class="record-top">
-          <div>
-            <div class="record-name">${esc(r.name)}</div>
-            <div class="record-date">${r.date}</div>
-          </div>
-
-          <div style="display:flex; gap:4px; align-items:center;">
-            <button class="del-btn" onclick="editRecord(${r.id})">✏️</button>
-            <button class="del-btn" onclick="deleteRecord(${r.id})">🗑</button>
-          </div>
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>面談記録</h2>
+            <input type="date" id="formDate">
+            <input type="text" id="formName" placeholder="名前">
+            <input type="text" id="formPlace" placeholder="場所">
+            <select id="formType">
+                <option value="1on1">1on1</option>
+                <option value="review">評価面談</option>
+                <option value="goal">目標設定</option>
+                <option value="other">その他</option>
+            </select>
+            <textarea id="formMemo" placeholder="メモ"></textarea>
+            <div class="modal-actions">
+                <button id="saveBtn">保存</button>
+                <button id="cancelBtn">閉じる</button>
+            </div>
         </div>
+    </div>
 
-        <div class="record-meta">
-          <span class="badge ${typeBadge[r.type] || 'badge-other'}">
-            ${typeLabel[r.type] || r.type}
-          </span>
-
-          ${r.place ? `<span class="record-place">📍 ${esc(r.place)}</span>` : ''}
-        </div>
-
-        ${r.memo ? `<div class="record-memo">${esc(r.memo).replace(/\n/g,'<br>')}</div>` : ''}
-      </div>
-    `).join('');
-
-  const names = [...new Set(records.map(r => r.name))].length;
-
-  document.getElementById('stats').innerHTML = `
-    <div class="stat-pill"><span class="val">${records.length}</span><span class="lbl">合計</span></div>
-    <div class="stat-pill"><span class="val">${names}</span><span class="lbl">人数</span></div>
-    <div class="stat-pill"><span class="val">${list.length}</span><span class="lbl">表示中</span></div>
-  `;
-}
-
-document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
-
-render();
-</script>
-
+    <script src="storage.js"></script>
+    <script src="filters.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
