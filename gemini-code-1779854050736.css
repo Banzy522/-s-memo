@@ -1,0 +1,169 @@
+:root {
+    --bg: #111110;
+    --surface: #1c1c1a;
+    --border: #2e2d2b;
+    --text: #f0ede8;
+    --sub: #8a887f;
+    --accent: #f0ede8;
+    --accentText: #111110;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: sans-serif;
+    padding-bottom: 120px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+}
+
+.header button {
+    border: none;
+    background: var(--accent);
+    color: var(--accentText);
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.filters {
+    display: grid;
+    gap: 8px;
+    padding: 16px;
+}
+
+.filters input,
+.filters select,
+textarea,
+#modal select,
+#modal input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+}
+
+#recordList {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 10px;
+}
+
+.card-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-date {
+    color: var(--sub);
+    font-size: 12px;
+}
+
+.card-memo {
+    margin-top: 12px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+.actions button {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: flex-end;
+    z-index: 100;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.modal-content {
+    width: 100%;
+    background: var(--surface);
+    padding: 20px;
+    border-radius: 24px 24px 0 0;
+    display: grid;
+    gap: 12px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.modal-actions button {
+    flex: 1;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #333;
+    color: #fff;
+}
+
+#saveBtn {
+    background: var(--accent);
+    color: var(--accentText);
+    font-weight: bold;
+}
+
+#stats {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px;
+}
+
+.stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+}
